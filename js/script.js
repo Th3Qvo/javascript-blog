@@ -24,7 +24,7 @@ const titleClickHandler = function(event){
 //    console.log('clickedElement', clickedElement);
     /* remove class 'active' from all articles */
     const activeArticles = document.querySelectorAll('.posts article.active');
-
+    
     for(let activeArticle of activeArticles){
         activeArticle.classList.remove('active');
     }
@@ -53,18 +53,30 @@ function generateTitleLinks(){
     const titleList = document.querySelector(optTitleListSelector);
     titleList.innerHTML = '';
     /* for each article */
-
+    const articles = document.querySelectorAll(optArticleSelector);
+    for(let article of articles){
+        article.innerHTML = '';
+    }
     /* get the article id */
-
+    let article;
+    for(let element of articles){
+        article = element;
+    }
+    console.log(article);
+    const articleID = article.getAttribute('id');
+    console.log(articleID);
     /* find the title element */
 
     /* get the title from the title element */
-
+    const articleTitle = article.getElementsByClassName(optTitleSelector).innerHTML;
+    console.log(articleTitle);
     /* create HTML of the link */
-
+    const linkHTML = '<li><a href="#' + articleID + '"><span>' + articleTitle + '</span></a></li>';
+    console.log(linkHTML);
     /* insert link into titleList */
+    titleList.insertAdjacentHTML("beforeend", linkHTML);
 
-//    console.log('Funkcja wywołana!');
+    console.log('Everything O.K. so far!!!');
 }
 generateTitleLinks();
 
