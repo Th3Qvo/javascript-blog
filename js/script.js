@@ -1,4 +1,9 @@
 {
+  const templates = {
+    articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+    articleTag: Handlebars.compile(document.querySelector('#template-article-tag').innerHTML),
+    articleAuthor: Handlebars.compile(document.querySelector('#template-article-author').innerHTML),
+  }
   'use strict';
 
   const optArticleSelector = '.post',
@@ -6,8 +11,6 @@
     optTitleListSelector = '.titles',
     optArticleTagsSelector = '.post-tags .list',
     optArticleAuthorSelector = '.post-author',
-    optTagsListSelector = '.tags .list',
-    optAuthorsListSelector = '.list .authors',
     optCloudClassCount = 5,
     optCloudClassPrefix = 'tag-size-';
 
@@ -18,7 +21,9 @@
     for(let article of articles){
       const articleID = article.getAttribute('id');
       const articleTitle = article.querySelector(optTitleSelector).innerHTML;
-      const linkHTML = '<li><a href="#' + articleID + '"><span>' + articleTitle + '</span></a></li>';
+      //const linkHTML = '<li><a href="#' + articleID + '"><span>' + articleTitle + '</span></a></li>';
+      const linkHTMLData = {id: articleID, title: articleTitle};
+      const linkHTML = templates.articleLink(linkHTMLData);
       html += linkHTML;
     }
 
@@ -80,7 +85,9 @@
       const articleTags = article.getAttribute('data-tags');
       const articleTagsArray = articleTags.split(' ');
       for(let tag of articleTagsArray){
-        const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+        //const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+        const linkHTMLData = {tag: tag};
+        const linkHTML = templates.articleTag(linkHTMLData);
         html = html + linkHTML +  ' ';
         if(!allTags[tag]){
           allTags[tag] = 1;
@@ -131,7 +138,9 @@
       const authorWrapper = article.querySelector(optArticleAuthorSelector);
       let html = '';
       const articleAuthors = article.getAttribute('data-author');
-      const authorHTML = '<a href="#author-' + articleAuthors + '">' + articleAuthors + '</a>';
+      //const authorHTML = '<a href="#author-' + articleAuthors + '">' + articleAuthors + '</a>';
+      const linkHTMLData = {author: articleAuthors};
+      const authorHTML = templates.articleAuthor(linkHTMLData);
       if(allAuthors.indexOf(authorHTML) == -1){
         allAuthors.push(authorHTML);
       }
