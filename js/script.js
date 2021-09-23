@@ -3,7 +3,9 @@
     articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
     articleTag: Handlebars.compile(document.querySelector('#template-article-tag').innerHTML),
     articleAuthor: Handlebars.compile(document.querySelector('#template-article-author').innerHTML),
+    tagCloud: Handlebars.compile(document.querySelector('#tag-cloud-link').innerHTML),
   }
+
   'use strict';
 
   const optArticleSelector = '.post',
@@ -99,11 +101,16 @@
     }
     const tagList = document.querySelector('.tags');
     const tagsParams = calculateTagsParams(allTags);
-    let allTagsHTML = '';
+    const allTagsData = {tags: []};
     for(let tag in allTags){
-      allTagsHTML += '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '(' + allTags[tag] + ')' + '</a></li>';
+      //allTagsHTML += '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '(' + allTags[tag] + ')' + '</a></li>';
+      allTagsData.tags.push({
+        tag: tag,
+        count: allTags[tag],
+        className: calculateTagClass(allTags[tag], tagsParams)
+      });
     }
-    tagList.innerHTML = allTagsHTML;
+    tagList.innerHTML = templates.tagCloud(allTagsData);
   };
   generateTags();
 
