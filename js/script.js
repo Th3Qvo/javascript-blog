@@ -160,9 +160,9 @@
     authorList.innerHTML = allAuthorHTML;*/
     const allAuthorsData = {authors: []};
     for(let author of allAuthors){
-      allAuthorsData.authors.push({
-        author: author
-      })
+      allAuthorsData.authors.push(
+        author
+      )
     }
     authorList.innerHTML = templates.authorsList(allAuthorsData);
   };
